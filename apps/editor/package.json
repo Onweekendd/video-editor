@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "editor",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -11,7 +11,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
+    "@repo/math": "workspace:*",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106"
