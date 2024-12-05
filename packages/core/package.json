@@ -6,13 +6,16 @@
     "build": "tsc"
   },
   "exports": {
-    "./editor": {
-      "types": "./src/editor.ts",
-      "default": "./dist/editor.js"
+    ".": {
+      "types": "./src/Editor.ts",
+      "default": "./dist/Editor.js"
     }
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
     "typescript": "latest"
+  },
+  "dependencies": {
+    "mitt": "^3.0.1"
   }
 }
