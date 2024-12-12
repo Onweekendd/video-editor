@@ -9,6 +9,10 @@
     ".": {
       "types": "./src/Editor.ts",
       "default": "./dist/Editor.js"
+    },
+    "./elements/Video": {
+      "types": "./src/elements/Video.ts",
+      "default": "./dist/elements/Video.js"
     }
   },
   "dependencies": {

@@ -6,9 +6,6 @@ import type { BaseElement } from "./BaseElement.js";
 class Video
   implements BaseElement, TimelineProcess, CanvasRender, BaseTransform
 {
-  /**@description 文件 */
-  file: File;
-
   name: string;
 
   fileSize: number;
@@ -29,16 +26,29 @@ class Video
   /**@description 高度 */
   height: number;
 
-  constructor(file: File) {
-    this.file = file;
+  constructor({
+    file,
+    width,
+    height,
+    frameRate,
+    createTime,
+    duration,
+  }: {
+    file: File;
+    width: number;
+    height: number;
+    frameRate: number;
+    createTime: Date;
+    duration: number;
+  }) {
     this.name = file.name;
     this.fileSize = file.size;
     this.fileType = file.type;
-    this.createTime = new Date();
-    this.duration = 0;
-    this.frameRate = 0;
-    this.width = 0;
-    this.height = 0;
+    this.createTime = createTime;
+    this.duration = duration;
+    this.frameRate = frameRate;
+    this.width = width;
+    this.height = height;
   }
 
   onSplit = () => {

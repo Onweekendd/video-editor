@@ -11,6 +11,7 @@ const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm";
 
 type EditorEvents = {
   onChange: () => void;
+  onFFmpegLog: ({ message }: { message: string }) => void;
 };
 
 class Editor extends EventEmitter<EditorEvents> {
@@ -30,9 +31,6 @@ class Editor extends EventEmitter<EditorEvents> {
     this.commandManager = new CommandManager();
 
     this.ffmpeg = new FFmpeg();
-    this.ffmpeg.on("log", ({ message }) => {
-      console.log(message);
-    });
   }
 
   static async build() {

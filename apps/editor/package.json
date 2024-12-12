@@ -16,7 +16,8 @@
     "next": "15.0.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -31,4 +32,3 @@
     "typescript": "5.5.4"
   }
 }
-

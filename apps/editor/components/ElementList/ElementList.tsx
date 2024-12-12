@@ -1,11 +1,19 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import VideoUpload from "./components/VideoUpload";
 import { EditorContext } from "../../context/EditorContext";
+import { Video } from "@video-editor/core/elements/Video";
 
 const ElementList = () => {
   const editor = useContext(EditorContext);
+  const [elementList, setElementList] = useState<Video[]>(
+    editor?.videoProcess.videos || [],
+  );
 
-  const elementList = editor?.resourceManager.videos;
+  useEffect(() => {
+    editor?.videoProcess.on("onVideoProcessFinish", ({ video }) => {
+      setElementList((prev) => [...prev, video]);
+    });
+  }, [editor]);
 
   return (
     <div className="h-full w-full">
@@ -13,9 +21,9 @@ const ElementList = () => {
         {elementList?.map((video) => (
           <div
             key={video.name + Math.random()}
-            className="aspect-square rounded-lg bg-gray-100"
+            className="aspect-square rounded-lg bg-gray-100 text-xs"
           >
-            {video.name}
+            {`${video.name} ${video.duration}s ${video.frameRate}fps ${video.width}x${video.height}`}
           </div>
         ))}
         <div className="aspect-square rounded-lg bg-gray-100">

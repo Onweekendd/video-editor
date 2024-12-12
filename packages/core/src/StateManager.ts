@@ -40,7 +40,7 @@ class StateManager {
 
     // 同步到编辑器
     if (newState.videos) {
-      this.editor.resourceManager.videos = newState.videos;
+      this.editor.resourceManager.files.videos = newState.videos;
     }
 
     this.notifyListeners();
@@ -59,7 +59,7 @@ class StateManager {
 
   syncFromEditor() {
     this.setState({
-      videos: this.editor.resourceManager.videos,
+      videos: this.editor.resourceManager.files.videos,
     });
   }
 }
