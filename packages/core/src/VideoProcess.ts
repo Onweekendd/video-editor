@@ -52,9 +52,14 @@ class VideoProcess extends EventEmitter<VideoProcessEvents> {
     return new Promise((resolve) => {
       let videoInfo = "";
 
+      const shouldListenerStop = (message: string) => {
+        return message.includes("Aborted()") || message.includes("error");
+      };
+
       const logHandler = ({ message }: { message: string }) => {
         videoInfo += message;
-        if (message.includes("Aborted()")) {
+
+        if (shouldListenerStop(message)) {
           resolve(matchVideoBaseInfo(videoInfo));
           this.editor.ffmpeg.off("log", logHandler);
         }
@@ -64,14 +69,21 @@ class VideoProcess extends EventEmitter<VideoProcessEvents> {
     });
   }
 
-  onVideoUpload = async ({ file }: { file: File }) => {
-    this.editor.ffmpeg.writeFile(file.name, await fetchFile(file));
-
+  private async getVideoBaseInfo(file: File) {
     const infoLogPromise = this.collectFFmpegLogs();
 
     await this.editor.ffmpeg.exec(["-i", file.name]);
 
     const { width, height, frameRate, duration } = await infoLogPromise;
+
+    return { width, height, frameRate, duration };
+  }
+
+  onVideoUpload = async ({ file }: { file: File }) => {
+    this.editor.ffmpeg.writeFile(file.name, await fetchFile(file));
+
+    const { width, height, frameRate, duration } =
+      await this.getVideoBaseInfo(file);
 
     const video = new Video({
       file,
