@@ -1,7 +1,10 @@
 import { Editor } from "./Editor.js";
+import type { Files } from "./ResourceManager.js";
+import type { Video } from "./elements/Video.js";
 
-interface EditorState {
-  videos: File[];
+export interface EditorState {
+  videos: Video[];
+  files: Files;
 }
 
 type Listener = (state: EditorState) => void;
@@ -21,6 +24,11 @@ class StateManager {
     this.listeners = new Set();
     this.state = {
       videos: [],
+      files: {
+        videos: [],
+        images: [],
+        audios: [],
+      },
     };
 
     this.editor.on("onChange", () => {
@@ -39,8 +47,12 @@ class StateManager {
     };
 
     // 同步到编辑器
+    if (newState.files) {
+      this.editor.resourceManager.files = newState.files;
+    }
+
     if (newState.videos) {
-      this.editor.resourceManager.files.videos = newState.videos;
+      this.editor.videoProcess.videos = newState.videos;
     }
 
     this.notifyListeners();
@@ -59,7 +71,8 @@ class StateManager {
 
   syncFromEditor() {
     this.setState({
-      videos: this.editor.resourceManager.files.videos,
+      files: this.editor.resourceManager.files,
+      videos: this.editor.videoProcess.videos,
     });
   }
 }

@@ -2,10 +2,10 @@ import type { Editor } from "./Editor.js";
 import { EventEmitter } from "./interfaces/EventEmitter.js";
 
 export type ResourceManagerEvents = {
-  onVideoUpload: (payload: { file: File }) => void;
+  onVideoUpload: (payload: { file: File; placeholderId?: string }) => void;
 };
 
-type Files = {
+export type Files = {
   videos: File[];
   images: File[];
   audios: File[];
@@ -24,10 +24,10 @@ class ResourceManager extends EventEmitter<ResourceManagerEvents> {
     this.editor = editor;
   }
 
-  addVideo(video: File) {
+  addVideo({ video, placeholderId }: { video: File; placeholderId?: string }) {
     this.files.videos.push(video);
 
-    this.emit("onVideoUpload", { file: video });
+    this.emit("onVideoUpload", { file: video, placeholderId });
   }
 }
 

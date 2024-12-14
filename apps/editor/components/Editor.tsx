@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Editor as EditorSDK } from "@video-editor/core";
+import { StateManager } from "@video-editor/core/StateManager";
 import TimeLine from "./TimeLine";
 import ElementList from "./ElementList/ElementList";
 import Renderer from "./Renderer";
@@ -10,10 +11,12 @@ import { EditorContext } from "../context/EditorContext";
 
 const Editor = () => {
   const [editor, setEditor] = useState<EditorSDK | null>(null);
+  const [stateManager, setStateManager] = useState<StateManager | null>(null);
 
   useEffect(() => {
     EditorSDK.build().then((editor) => {
       setEditor(editor);
+      setStateManager(new StateManager(editor));
     });
   }, []);
 

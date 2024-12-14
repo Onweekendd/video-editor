@@ -13,12 +13,17 @@
     "./elements/Video": {
       "types": "./src/elements/Video.ts",
       "default": "./dist/elements/Video.js"
+    },
+    "./StateManager": {
+      "types": "./src/StateManager.ts",
+      "default": "./dist/StateManager.js"
     }
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.6",
     "@ffmpeg/util": "^0.12.1",
-    "mitt": "^3.0.1"
+    "mitt": "^3.0.1",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

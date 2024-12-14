@@ -2,10 +2,13 @@ import type { TimelineProcess } from "../interfaces/TimelineProcess.js";
 import type { CanvasRender } from "../interfaces/CanvasRender.js";
 import type { BaseTransform } from "../interfaces/BaseTransform.js";
 import type { BaseElement } from "./BaseElement.js";
+import { v4 as uuidv4 } from "uuid";
 
 class Video
   implements BaseElement, TimelineProcess, CanvasRender, BaseTransform
 {
+  id: string;
+
   name: string;
 
   fileSize: number;
@@ -46,6 +49,7 @@ class Video
     duration: number;
     cover: string;
   }) {
+    this.id = uuidv4();
     this.name = file.name;
     this.fileSize = file.size;
     this.fileType = file.type;

@@ -29,7 +29,10 @@ function matchVideoBaseInfo(videoInfo: string): {
 }
 
 type VideoProcessEvents = {
-  onVideoProcessFinish: (payload: { video: Video }) => void;
+  onVideoProcessFinish: (payload: {
+    video: Video;
+    placeholderId?: string;
+  }) => void;
 };
 
 class VideoProcess extends EventEmitter<VideoProcessEvents> {
@@ -99,7 +102,13 @@ class VideoProcess extends EventEmitter<VideoProcessEvents> {
     return { width, height, frameRate, duration, cover };
   }
 
-  onVideoUpload = async ({ file }: { file: File }) => {
+  onVideoUpload = async ({
+    file,
+    placeholderId,
+  }: {
+    file: File;
+    placeholderId?: string;
+  }) => {
     this.editor.ffmpeg.writeFile(file.name, await fetchFile(file));
 
     const { width, height, frameRate, duration, cover } =
@@ -120,7 +129,7 @@ class VideoProcess extends EventEmitter<VideoProcessEvents> {
     console.log(video);
     this.videos.push(video);
 
-    this.emit("onVideoProcessFinish", { video });
+    this.emit("onVideoProcessFinish", { video, placeholderId });
   };
 }
 

@@ -1,14 +1,17 @@
 import { create } from "zustand";
-
-interface EditorState {
-  videos: File[];
-}
+import type { Video } from "@video-editor/core/elements/Video";
+import {
+  StateManager,
+  type EditorState,
+} from "@video-editor/core/StateManager";
 
 interface EditorActions {
-  setVideos: (videos: File[]) => void;
+  setVideos: (videos: Video[]) => void;
 }
 
-export const useEditorStore = create<EditorState & EditorActions>()((set) => ({
-  videos: [],
-  setVideos: (videos) => set({ videos }),
-}));
+export const useEditorStore = (stateManager: StateManager) =>
+  create<EditorState & EditorActions>((set) => ({
+    videos: stateManager.state.videos,
+    files: stateManager.state.files,
+    setVideos: (videos) => {},
+  }));

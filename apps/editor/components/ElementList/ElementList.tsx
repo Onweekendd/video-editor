@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import VideoUpload from "./components/VideoUpload";
 import { EditorContext } from "../../context/EditorContext";
 import { Video } from "@video-editor/core/elements/Video";
+import Image from "next/image";
 
 const ElementList = () => {
   const editor = useContext(EditorContext);
@@ -11,9 +12,38 @@ const ElementList = () => {
 
   useEffect(() => {
     editor?.videoProcess.on("onVideoProcessFinish", ({ video }) => {
-      setElementList((prev) => [...prev, video]);
+      setElementList((prev) => {
+        // 找到并替换占位元素
+        const index = prev.findIndex((v) => v.id.includes("placeholder"));
+        if (index !== -1) {
+          const newList = [...prev];
+          newList[index] = video;
+          return newList;
+        }
+        return [...prev, video];
+      });
     });
   }, [editor]);
+
+  const onVideoUpload = (file: File) => {
+    const placeholder = new Video({
+      file,
+      width: 0,
+      height: 0,
+      frameRate: 0,
+      createTime: new Date(),
+      duration: 0,
+      cover: "",
+    });
+
+    placeholder.id += "placeholder";
+    setElementList((prev) => [...prev, placeholder]);
+
+    editor?.resourceManager.addVideo({
+      video: file,
+      placeholderId: placeholder.id,
+    });
+  };
 
   return (
     <div className="h-full w-full">
@@ -23,15 +53,22 @@ const ElementList = () => {
             key={video.name + Math.random()}
             className="aspect-square rounded-lg bg-gray-100 text-xs"
           >
-            {`${video.name} ${video.duration}s ${video.frameRate}fps ${video.width}x${video.height}`}
+            {video.id.includes("placeholder") ? (
+              <div className="flex h-full w-full items-center justify-center">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-sky-500" />
+              </div>
+            ) : (
+              <Image
+                className="!relative h-full w-full rounded-md border-2 border-transparent object-cover hover:border-sky-500"
+                src={video.cover}
+                alt={video.name}
+                fill
+              />
+            )}
           </div>
         ))}
         <div className="aspect-square rounded-lg bg-gray-100">
-          <VideoUpload
-            onChange={(file) => {
-              editor?.resourceManager.addVideo(file);
-            }}
-          />
+          <VideoUpload onChange={onVideoUpload} />
         </div>
       </div>
     </div>
