@@ -2,10 +2,10 @@
   "name": "@video-editor/core",
   "type": "module",
   "scripts": {
-    "dev": "rd /s /q dist && rollup -c -w",
+    "dev": "rollup -c -w",
     "build": "rollup -c"
   },
-  "module": "./dist/index.esm.js",
+  "module": "./dist/index.js",
   "files": [
     "./dist/*"
   ],
@@ -23,6 +23,7 @@
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.1",
+    "rollup-plugin-dts": "^6.1.1",
     "rollup": "^4.28.1",
     "typescript": "latest"
   }

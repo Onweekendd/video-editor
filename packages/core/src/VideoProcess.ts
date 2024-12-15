@@ -1,9 +1,9 @@
 import { fetchFile } from "@ffmpeg/util";
-import { EditorState } from "@/EditorState.ts";
-import { Video } from "@/elements/Video.ts";
-import { matchVideoBaseInfo } from "@/utils/index.ts";
+import { EditorState } from "./EditorState.ts";
+import { Video } from "./elements/Video.ts";
+import { matchVideoBaseInfo } from "./utils/index.ts";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { ResourceManager } from "@/ResourceManager.ts";
+import { ResourceManager } from "./ResourceManager.ts";
 
 class VideoProcess {
   ffmpeg: FFmpeg;
@@ -96,6 +96,8 @@ class VideoProcess {
       name: file.name,
       ...(await this.getVideoBaseInfo(file)),
     });
+
+    console.log(video);
 
     this.ffmpeg.deleteFile(file.name);
 

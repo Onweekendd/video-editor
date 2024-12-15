@@ -1,14 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import VideoUpload from "./components/VideoUpload";
 import { EditorContext } from "../index";
-import { Video } from "@video-editor/core";
 import Image from "next/image";
 
 const ElementList = () => {
   const editor = useContext(EditorContext);
-  const [elementList, setElementList] = useState<Video[]>(
-    editor?.state.getVideos() || [],
-  );
 
   // useEffect(() => {
   //   editor?.videoProcess.on("onVideoProcessFinish", ({ video }) => {
@@ -25,32 +21,10 @@ const ElementList = () => {
   //   });
   // }, [editor]);
 
-  const onVideoUpload = (file: File) => {
-    const placeholder = new Video({
-      name: file.name,
-      fileSize: file.size,
-      fileType: file.type,
-      width: 0,
-      height: 0,
-      frameRate: 0,
-      createTime: new Date(),
-      duration: 0,
-      cover: "",
-    });
-
-    placeholder.id += "placeholder";
-    setElementList((prev) => [...prev, placeholder]);
-
-    editor?.resourceManager.addVideo({
-      video: file,
-      placeholderId: placeholder.id,
-    });
-  };
-
   return (
     <div className="h-full w-full">
       <div className="grid h-full w-full grid-cols-4 grid-rows-2 gap-4 p-4">
-        {elementList?.map((video) => (
+        {editor?.state.getVideos().map((video) => (
           <div
             key={video.name + Math.random()}
             className="aspect-square rounded-lg bg-gray-100 text-xs"
@@ -70,7 +44,7 @@ const ElementList = () => {
           </div>
         ))}
         <div className="aspect-square rounded-lg bg-gray-100">
-          <VideoUpload onChange={onVideoUpload} />
+          <VideoUpload onChange={() => {}} />
         </div>
       </div>
     </div>

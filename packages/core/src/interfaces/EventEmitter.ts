@@ -14,7 +14,6 @@ abstract class EventEmitter<
   }>;
 
   constructor() {
-    // @ts-ignore
     this.emitter = mitt();
   }
 
@@ -33,7 +32,6 @@ abstract class EventEmitter<
       : []
   ) {
     if (payload.length === 0) {
-      // @ts-expect-error 这里没有办法分辨是否需要传入 payload
       this.emitter.emit(evtName);
     } else {
       // @ts-expect-error 这里没有办法分辨是否需要传入 payload

@@ -14,8 +14,8 @@ class Editor {
   timeManager: TimeManager;
   videoProcess: VideoProcess;
   commandManager: CommandManager;
-
   ffmpeg: FFmpeg;
+
   state: EditorState;
 
   constructor(state: EditorState) {
