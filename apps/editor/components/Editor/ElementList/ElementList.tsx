@@ -6,20 +6,11 @@ import Image from "next/image";
 const ElementList = () => {
   const editor = useContext(EditorContext);
 
-  // useEffect(() => {
-  //   editor?.videoProcess.on("onVideoProcessFinish", ({ video }) => {
-  //     setElementList((prev) => {
-  //       // 找到并替换占位元素
-  //       const index = prev.findIndex((v) => v.id.includes("placeholder"));
-  //       if (index !== -1) {
-  //         const newList = [...prev];
-  //         newList[index] = video;
-  //         return newList;
-  //       }
-  //       return [...prev, video];
-  //     });
-  //   });
-  // }, [editor]);
+  const onUpload = (file: File) => {
+    editor?.resourceManager.addVideo({
+      video: file,
+    });
+  };
 
   return (
     <div className="h-full w-full">
@@ -44,7 +35,7 @@ const ElementList = () => {
           </div>
         ))}
         <div className="aspect-square rounded-lg bg-gray-100">
-          <VideoUpload onChange={() => {}} />
+          <VideoUpload onChange={onUpload} />
         </div>
       </div>
     </div>

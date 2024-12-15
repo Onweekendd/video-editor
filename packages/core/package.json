@@ -2,8 +2,8 @@
   "name": "@video-editor/core",
   "type": "module",
   "scripts": {
-    "dev": "rollup -c -w",
-    "build": "rollup -c"
+    "dev": "tsc && rollup -c -w",
+    "build": "tsc && rollup -c"
   },
   "module": "./dist/index.js",
   "files": [
