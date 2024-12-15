@@ -7,16 +7,8 @@
   },
   "exports": {
     ".": {
-      "types": "./src/Editor.ts",
-      "default": "./dist/Editor.js"
-    },
-    "./elements/Video": {
-      "types": "./src/elements/Video.ts",
-      "default": "./dist/elements/Video.js"
-    },
-    "./StateManager": {
-      "types": "./src/StateManager.ts",
-      "default": "./dist/StateManager.js"
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
     }
   },
   "dependencies": {

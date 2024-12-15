@@ -5,8 +5,8 @@
     "rootDir": "src",
     "module": "ES6",
     "moduleResolution": "bundler",
-    "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": false
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

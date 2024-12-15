@@ -1,33 +1,35 @@
 import { useContext, useEffect, useState } from "react";
 import VideoUpload from "./components/VideoUpload";
 import { EditorContext } from "../../context/EditorContext";
-import { Video } from "@video-editor/core/elements/Video";
+import { Video } from "@video-editor/core";
 import Image from "next/image";
 
 const ElementList = () => {
   const editor = useContext(EditorContext);
   const [elementList, setElementList] = useState<Video[]>(
-    editor?.videoProcess.videos || [],
+    editor?.state.getVideos() || [],
   );
 
-  useEffect(() => {
-    editor?.videoProcess.on("onVideoProcessFinish", ({ video }) => {
-      setElementList((prev) => {
-        // 找到并替换占位元素
-        const index = prev.findIndex((v) => v.id.includes("placeholder"));
-        if (index !== -1) {
-          const newList = [...prev];
-          newList[index] = video;
-          return newList;
-        }
-        return [...prev, video];
-      });
-    });
-  }, [editor]);
+  // useEffect(() => {
+  //   editor?.videoProcess.on("onVideoProcessFinish", ({ video }) => {
+  //     setElementList((prev) => {
+  //       // 找到并替换占位元素
+  //       const index = prev.findIndex((v) => v.id.includes("placeholder"));
+  //       if (index !== -1) {
+  //         const newList = [...prev];
+  //         newList[index] = video;
+  //         return newList;
+  //       }
+  //       return [...prev, video];
+  //     });
+  //   });
+  // }, [editor]);
 
   const onVideoUpload = (file: File) => {
     const placeholder = new Video({
-      file,
+      name: file.name,
+      fileSize: file.size,
+      fileType: file.type,
       width: 0,
       height: 0,
       frameRate: 0,
