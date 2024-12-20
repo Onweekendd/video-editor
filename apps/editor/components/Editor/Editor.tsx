@@ -14,6 +14,7 @@ const Editor = () => {
     activeVideoId: "",
     videos: [],
     filesName: [],
+    renderingVideoIds: [],
   });
   const storeRef = useRef(new ReducerEditorState(state, dispatch));
 

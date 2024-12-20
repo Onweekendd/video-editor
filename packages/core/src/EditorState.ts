@@ -1,9 +1,17 @@
 import { Video } from "./elements/Video.ts";
 
 export interface State {
+  /**@description 当前激活的视频Id */
   activeVideoId: string;
+
+  /**@description 视频列表 */
   videos: Video[];
+
+  /**@description 文件名列表 */
   filesName: string[];
+
+  /**@description 正在渲染的视频Id列表 */
+  renderingVideoIds: string[];
 }
 
 export abstract class EditorState {
@@ -34,5 +42,19 @@ export abstract class EditorState {
     return this.getState().videos.find(
       (video) => video.id === this.getState().activeVideoId
     );
+  }
+
+  public addVideoToRenderingList(id: string) {
+    this.setState({
+      renderingVideoIds: [...this.getState().renderingVideoIds, id],
+    });
+  }
+
+  public removeVideoFromRenderingList(id: string) {
+    this.setState({
+      renderingVideoIds: this.getState().renderingVideoIds.filter(
+        (id) => id !== id
+      ),
+    });
   }
 }

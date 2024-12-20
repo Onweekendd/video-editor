@@ -14,7 +14,7 @@ const ElementList = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="grid h-full w-full grid-cols-5 grid-rows-3 gap-4 p-4">
+      <div className="grid h-full w-full grid-cols-3 grid-rows-4 gap-4 p-4">
         {editor?.state
           .getVideos()
           .map((video) => <VideoItem key={video.id} video={video} />)}
