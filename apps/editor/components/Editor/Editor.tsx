@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useReducer, useRef, useState } from "react";
+
 import { Editor as EditorSDK } from "@video-editor/core";
-import TimeLine from "./TimeLine";
+
 import ElementList from "./ElementList/ElementList";
-import Renderer from "./Renderer";
 import PropertyEditor from "./PropertyEditor";
+import Renderer from "./Renderer";
+import TimeLine from "./TimeLine";
 import { EditorContext, ReducerEditorState, editorStateReducer } from "./index";
 
 const Editor = () => {

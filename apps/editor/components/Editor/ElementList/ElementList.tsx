@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import VideoUpload from "./components/VideoUpload";
+
 import { EditorContext } from "../index";
 import VideoItem from "./components/VideoItem";
+import VideoUpload from "./components/VideoUpload";
 
 const ElementList = () => {
   const editor = useContext(EditorContext);
@@ -13,13 +14,18 @@ const ElementList = () => {
   };
 
   return (
-    <div className="h-full w-full">
-      <div className="grid h-full w-full grid-cols-3 grid-rows-4 gap-4 p-4">
-        {editor?.state
-          .getVideos()
-          .map((video) => <VideoItem key={video.id} video={video} />)}
-        <div className="aspect-square rounded-lg bg-gray-100">
+    <div className="flex h-full w-full flex-col">
+      <div className="flex items-center gap-4 border-b p-2">
+        <div className="flex items-center gap-2">
           <VideoUpload onChange={onUpload} />
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-auto p-2">
+        <div className="grid h-full w-full grid-cols-3 grid-rows-3 gap-4">
+          {editor?.state
+            .getVideos()
+            .map((video) => <VideoItem key={video.id} video={video} />)}
         </div>
       </div>
     </div>

@@ -33,6 +33,11 @@ class Editor {
 
     this.timeManager = new TimeManager();
     this.commandManager = new CommandManager();
+    this.renderer = new Renderer({
+      state: this.state,
+      width: 1920,
+      height: 1080,
+    });
   }
 
   static async build(store: EditorState) {
