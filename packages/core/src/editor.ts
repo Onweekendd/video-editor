@@ -1,9 +1,9 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
+import { toBlobURL } from "@ffmpeg/util";
 
 import { CommandManager } from "./CommandManager.ts";
 import { EditorState } from "./EditorState.js";
 import { Renderer } from "./Renderer.ts";
-import { toBlobURL } from "@ffmpeg/util";
 import { TimeManager } from "./TimeManager.ts";
 import { VideoProcess } from "./VideoProcess.ts";
 

@@ -1,6 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Stage, Layer, Image as KonvaImage } from "react-konva";
+
 import type { Image } from "konva/lib/shapes/Image";
+import { Image as KonvaImage, Layer, Stage } from "react-konva";
+
 import { EditorContext } from ".";
 
 const Renderer = () => {

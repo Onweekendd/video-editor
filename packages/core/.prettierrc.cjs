@@ -1,11 +1,10 @@
-export default {
+module.exports = {
   endOfLine: "crlf",
   printWidth: 80,
+  proseWrap: "preserve",
   plugins: [
     "@trivago/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss",
   ],
-  proseWrap: "preserve",
   importOrder: [
     "^react$",
     "^next(.*)$",
@@ -17,3 +16,4 @@ export default {
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
 };
+
