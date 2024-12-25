@@ -35,8 +35,8 @@ class Editor {
     this.commandManager = new CommandManager();
     this.renderer = new Renderer({
       state: this.state,
-      width: 1920,
-      height: 1080,
+      width: 0,
+      height: 0,
     });
   }
 
@@ -53,6 +53,11 @@ class Editor {
     });
 
     return editor;
+  }
+
+  initRenderer({ width, height }: { width: number; height: number }) {
+    this.renderer.width = width;
+    this.renderer.height = height;
   }
 }
 

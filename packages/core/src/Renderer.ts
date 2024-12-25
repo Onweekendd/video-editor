@@ -1,4 +1,5 @@
 import { EditorState } from "./EditorState.js";
+import type { Video } from "./index.js";
 
 class Renderer {
   state: EditorState;
@@ -20,10 +21,38 @@ class Renderer {
   }
 
   addVideoToRenderer(id: string) {
+    const video = this.state.getVideos().find((video) => video.id === id);
+    const { width, height } = this.calculateDimensions(video);
+    video.renderWidth = width;
+    video.renderHeight = height;
+
+    console.log(video);
+
     this.state.setState({
       renderingVideoIds: [...this.state.getRenderingList(), id],
     });
   }
+
+  /**
+   * 计算视频渲染尺寸
+   * @param video 视频
+   * @returns 渲染尺寸
+   */
+  calculateDimensions = (video: Video) => {
+    console.log(this.width, this.height);
+
+    const videoRatio = video.width / video.height;
+
+    let width = this.width;
+    let height = this.width / videoRatio;
+
+    if (height > this.height) {
+      height = this.height;
+      width = this.height * videoRatio;
+    }
+
+    return { width, height };
+  };
 
   removeVideoFromRenderer(id: string) {
     this.state.setState({

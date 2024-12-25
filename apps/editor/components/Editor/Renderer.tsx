@@ -1,63 +1,66 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useReducer, useRef } from "react";
 
 import type { Image } from "konva/lib/shapes/Image";
 import { Image as KonvaImage, Layer, Stage } from "react-konva";
 
 import { EditorContext } from ".";
 
+const animate = (
+  videoElement: HTMLVideoElement,
+  videoNode: Image | undefined,
+) => {
+  if (videoElement.paused || videoElement.ended || !videoNode) {
+    return;
+  }
+
+  videoNode?.getLayer()?.batchDraw();
+  requestAnimationFrame(() => animate(videoElement, videoNode));
+};
+
 const Renderer = () => {
   const editor = useContext(EditorContext);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoNode, setVideoNode] = useState<Image | null>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
-  const activeVideo = editor?.state.getActiveVideo();
   const canvasContainerRef = useRef<HTMLDivElement>(null);
 
-  // 计算视频尺寸以适应容器
-  const calculateDimensions = () => {
-    const video = videoRef.current;
-    const container = canvasContainerRef.current;
-    if (!video || !container) return;
+  const renderingVideos = editor?.state
+    .getRenderingList()
+    .map((id) => editor?.state.getVideos().find((video) => video.id === id));
 
-    const containerWidth = container.clientWidth;
-    const containerHeight = container.clientHeight;
-    const videoRatio = video.videoWidth / video.videoHeight;
+  const videoRef = useRef<HTMLVideoElement[]>([]);
+  const renderingVideoNodesRef = useRef<Image[]>([]);
 
-    let width = containerWidth;
-    let height = containerWidth / videoRatio;
-
-    // 如果计算出的高度超过容器高度，则以高度为基准重新计算
-    if (height > containerHeight) {
-      height = containerHeight;
-      width = containerHeight * videoRatio;
-    }
-
-    setDimensions({ width, height });
-  };
+  const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.src = activeVideo?.fileUrl ?? "";
+    editor?.initRenderer({
+      width: canvasContainerRef.current?.clientWidth ?? 0,
+      height: canvasContainerRef.current?.clientHeight ?? 0,
+    });
+  }, [editor]);
 
-      const animate = () => {
-        if (video.paused || video.ended) {
-          return;
-        }
+  useEffect(() => {
+    renderingVideos?.forEach((video, index) => {
+      const videoElement = videoRef.current[index];
+      const videoNode = renderingVideoNodesRef.current[index];
 
-        videoNode?.getLayer()?.batchDraw();
-        requestAnimationFrame(animate);
-      };
+      console.log(video, videoElement, videoNode);
 
-      video.addEventListener("loadeddata", () => {
-        calculateDimensions();
-        video.play();
-        animate();
-      });
-    }
-  }, [activeVideo?.fileUrl, videoNode]);
+      if (video && videoElement) {
+        videoElement.src = video.fileUrl;
+
+        videoElement.addEventListener("loadeddata", () => {
+          videoElement.play();
+          animate(videoElement, videoNode);
+        });
+      }
+    });
+
+    forceUpdate();
+  }, [
+    renderingVideos?.length,
+    videoRef.current?.length,
+    renderingVideoNodesRef.current.length,
+  ]);
 
   return (
     <div ref={canvasContainerRef} className="h-full w-full">
@@ -66,19 +69,38 @@ const Renderer = () => {
         height={canvasContainerRef.current?.clientHeight}
       >
         <Layer>
-          <KonvaImage
-            x={0}
-            y={0}
-            width={dimensions.width}
-            height={dimensions.height}
-            ref={(node) => {
-              setVideoNode(node);
-            }}
-            image={videoRef.current!}
-          />
+          {renderingVideos?.map(
+            (video, index) =>
+              video && (
+                <KonvaImage
+                  key={video.id}
+                  x={0}
+                  y={0}
+                  width={video.renderWidth}
+                  height={video.renderHeight}
+                  ref={(node) => {
+                    if (node) {
+                      renderingVideoNodesRef.current[index] = node;
+                    }
+                  }}
+                  image={videoRef.current[index]!}
+                />
+              ),
+          )}
         </Layer>
       </Stage>
-      <video ref={videoRef} src={activeVideo?.fileUrl} hidden />
+      {renderingVideos?.map((video, index) => (
+        <video
+          key={video?.id}
+          ref={(node) => {
+            if (node) {
+              videoRef.current[index] = node;
+            }
+          }}
+          src={video?.fileUrl}
+          hidden
+        />
+      ))}
     </div>
   );
 };

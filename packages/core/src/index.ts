@@ -1,4 +1,4 @@
-export * from "./Editor.ts";
+export * from "./VideoEditor.ts";
 export * from "./EditorState.ts";
 export * from "./VideoProcess.ts";
 export * from "./TimeManager.ts";
