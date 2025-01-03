@@ -10,9 +10,6 @@ interface CanvasRender {
 
   /**@description 渲染的高度 */
   renderHeight: number;
-
-  /**@description 渲染的回调 */
-  onRender: () => void;
 }
 
 export type { CanvasRender };

@@ -17,13 +17,13 @@ export class Track {
   locked: boolean;
 
   /**@description 可渲染的轨道元素 */
-  renderabelElements: Array<CanvasRender & Clip>;
+  renderElements: Array<CanvasRender & Clip>;
 
   constructor(name: string) {
     this.id = uuidv4();
     this.name = name;
     this.visible = true;
     this.locked = false;
-    this.renderabelElements = [];
+    this.renderElements = [];
   }
 }

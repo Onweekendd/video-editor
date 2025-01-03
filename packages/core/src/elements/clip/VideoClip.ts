@@ -32,8 +32,6 @@ class VideoClip implements Clip, CanvasRender {
     this.startTimestamp = startTimestamp;
     this.endTimestamp = endTimestamp;
   }
-
-  onRender = () => {};
 }
 
 export { VideoClip };

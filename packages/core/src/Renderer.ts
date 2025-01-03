@@ -35,61 +35,64 @@ class Renderer {
     this.frameInterval = 1000 / fps; // 计算帧间隔
   }
 
-  addVideoToRenderer(id: string) {
-    const video = this.state.getVideos().find((video) => video.id === id);
-    const { width, height } = this.calculateDimensions(video);
-    video.renderWidth = width;
-    video.renderHeight = height;
+  // addVideoToRenderer(id: string) {
+  //   const video = this.state.getVideos().find((video) => video.id === id);
+  //   const { width, height } = this.calculateDimensions(video);
+  //   video.renderWidth = width;
+  //   video.renderHeight = height;
 
-    video.y = this.height / 2 - video.renderHeight / 2;
+  //   video.y = this.height / 2 - video.renderHeight / 2;
 
-    this.state.setState({
-      renderingVideoIds: [...this.state.getRenderingList(), id],
-    });
-  }
+  //   this.state.setState({
+  //     renderingVideoIds: [...this.state.getRenderingList(), id],
+  //   });
+  // }
 
-  /**
-   * 计算视频渲染尺寸
-   * @param video 视频
-   * @returns 渲染尺寸
-   */
-  calculateDimensions = (video: Video) => {
-    const videoRatio = video.width / video.height;
+  // /**
+  //  * 计算视频渲染尺寸
+  //  * @param video 视频
+  //  * @returns 渲染尺寸
+  //  */
+  // calculateDimensions = (video: Video) => {
+  //   const videoRatio = video.width / video.height;
 
-    let width = this.width;
-    let height = this.width / videoRatio;
+  //   let width = this.width;
+  //   let height = this.width / videoRatio;
 
-    if (height > this.height) {
-      height = this.height;
-      width = this.height * videoRatio;
-    }
+  //   if (height > this.height) {
+  //     height = this.height;
+  //     width = this.height * videoRatio;
+  //   }
 
-    return { width, height };
-  };
+  //   return { width, height };
+  // };
 
-  private animate = (timestamp: number) => {
-    if (!this.lastFrameTime) {
-      this.lastFrameTime = timestamp;
-    }
+  // private animate = (timestamp: number) => {
+  //   if (!this.lastFrameTime) {
+  //     this.lastFrameTime = timestamp;
+  //   }
 
-    const elapsed = timestamp - this.lastFrameTime;
+  //   const elapsed = timestamp - this.lastFrameTime;
 
-    // 如果经过的时间大于等于帧间隔，则触发渲染
-    if (elapsed >= this.frameInterval) {
-      const renderingVideos = this.state
-        .getRenderingList()
-        .map((id) => this.state.getVideos().find((video) => video.id === id));
+  //   // 如果经过的时间大于等于帧间隔，则触发渲染
+  //   if (elapsed >= this.frameInterval) {
+  //     const renderingVideos = this.state
+  //       .getRenderingList()
+  //       .map((id) => this.state.getVideos().find((video) => video.id === id));
 
-      renderingVideos.forEach((video) => {
-        if (video) this.onVideoPlay(video);
-      });
+  //     renderingVideos.forEach((video) => {
+  //       if (video) this.onVideoPlay(video);
+  //     });
 
-      this.lastFrameTime = timestamp - (elapsed % this.frameInterval);
-    }
+  //     this.lastFrameTime = timestamp - (elapsed % this.frameInterval);
+  //   }
 
-    // 继续下一帧
-    this.animationFrameId = requestAnimationFrame(this.animate);
-  };
+  //   // 继续下一帧
+  //   this.animationFrameId = requestAnimationFrame(this.animate);
+  // };
+
+
+  private animate = (timestamp: number) => {};
 
   onPlay = () => {
     if (!this.animationFrameId) {
