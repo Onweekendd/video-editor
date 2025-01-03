@@ -1,13 +1,16 @@
 export interface Clip {
-  /** 唯一标识 */
+  /** @description  唯一标识 */
   id: string;
 
-  /** 名称 */
+  /** @description 资源ID */
+  resourceId: string;
+
+  /** @description 名称 */
   name: string;
 
-  /** 开始时间戳 */
+  /** @description 开始时间戳 */
   startTimestamp: number;
 
-  /** 结束时间戳 */
+  /** @description 结束时间戳 */
   endTimestamp: number;
 }

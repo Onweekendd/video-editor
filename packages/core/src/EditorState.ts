@@ -23,7 +23,7 @@ export interface State {
   unitPixelOfTime: number;
 
   /**@description 轨道列表 */
-  tracks: Track<BaseElement & TimelineProcess>[];
+  tracks: Track[];
 }
 
 export abstract class EditorState {
@@ -80,7 +80,7 @@ export abstract class EditorState {
     return this.getState().tracks;
   }
 
-  public setTracks(tracks: Track<BaseElement & TimelineProcess>[]) {
+  public setTracks(tracks: Track[]) {
     this.setState({
       tracks,
     });

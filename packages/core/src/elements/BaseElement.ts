@@ -2,9 +2,6 @@ interface BaseElement {
   /**@description 唯一标识 */
   id: string;
 
-  /**@description 资源ID */
-  resourceId: string;
-
   /**@description 名称 */
   name: string;
 

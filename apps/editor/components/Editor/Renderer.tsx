@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
 import type { Image } from "konva/lib/shapes/Image";
 import { Image as KonvaImage, Layer, Stage } from "react-konva";
@@ -16,11 +9,11 @@ import { EditorContext } from ".";
 import PlayControl from "./components/PlayControl";
 
 const Renderer = () => {
-  const editor = useContext(EditorContext);
+  const editor = useContext(EditorContext)!;
 
-  const renderingVideos = editor?.state
+  const renderingVideos = editor.state
     .getRenderingList()
-    .map((id) => editor?.state.getVideos().find((video) => video.id === id));
+    .map((id) => editor.state.getVideos().find((video) => video.id === id));
 
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const videoToElement = useRef<
@@ -41,7 +34,7 @@ const Renderer = () => {
   }, []);
 
   useEffect(() => {
-    editor?.initRenderer({
+    editor.initRenderer({
       width: canvasContainerRef.current?.clientWidth ?? 0,
       height: canvasContainerRef.current?.clientHeight ?? 0,
       onVideoPlay,
@@ -72,16 +65,16 @@ const Renderer = () => {
       for (const { element } of videoToElement.current.values()) {
         element?.pause();
       }
-      editor?.renderer?.onPause();
+      editor.renderer?.onPause();
       setIsPlaying(false);
     } else {
       for (const { element } of videoToElement.current.values()) {
         element?.play();
       }
-      editor?.renderer?.onPlay();
+      editor.renderer?.onPlay();
       setIsPlaying(true);
     }
-  }, [isPlaying, editor?.renderer]);
+  }, [isPlaying, editor.renderer]);
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -142,3 +135,4 @@ const Renderer = () => {
 };
 
 export default Renderer;
+

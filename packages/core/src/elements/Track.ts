@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { Clip } from "./Clip";
+import { Clip } from "../interfaces/Clip";
 
 export class Track {
   /**@description 轨道唯一标识 */
