@@ -1,5 +1,8 @@
 import { EditorState } from "./EditorState.js";
+import { Track } from "./elements/Track.js";
 import type { Video } from "./index.js";
+import { CanvasRender } from "./interfaces/CanvasRender.js";
+import { Clip } from "./interfaces/Clip.js";
 
 class Renderer {
   state: EditorState;

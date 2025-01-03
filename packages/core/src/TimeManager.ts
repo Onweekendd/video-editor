@@ -22,7 +22,7 @@ class TimeManager {
       endTimestamp: video.duration,
     });
 
-    track.elements.push(videoClip);
+    track.renderabelElements.push(videoClip);
     this.state.setTracks([...trackList, track]);
   }
 }

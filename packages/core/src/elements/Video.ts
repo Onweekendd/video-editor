@@ -1,12 +1,8 @@
-import type { TimelineProcess } from "../interfaces/TimelineProcess.js";
-import type { CanvasRender } from "../interfaces/CanvasRender.js";
-import type { BaseTransform } from "../interfaces/BaseTransform.js";
-import type { BaseElement } from "./BaseElement.js";
 import { v4 as uuidv4 } from "uuid";
 
-class Video
-  implements BaseElement, TimelineProcess, CanvasRender, BaseTransform
-{
+import type { BaseElement } from "./BaseElement.js";
+
+class Video implements BaseElement {
   id: string;
 
   /**@description 状态 */
@@ -17,11 +13,6 @@ class Video
   fileType: string;
   fileUrl: string;
   createTime: Date;
-
-  x: number;
-  y: number;
-  renderWidth: number;
-  renderHeight: number;
 
   /**@description 宽度 */
   width: number;
@@ -49,10 +40,6 @@ class Video
     createTime,
     duration,
     cover,
-    x,
-    y,
-    renderWidth,
-    renderHeight,
   }: {
     name?: string;
     fileSize?: number;
@@ -64,10 +51,6 @@ class Video
     createTime?: Date;
     duration?: number;
     cover?: string;
-    x?: number;
-    y?: number;
-    renderWidth?: number;
-    renderHeight?: number;
   } = {}) {
     this.id = uuidv4();
     this.status = "processing";
@@ -83,36 +66,7 @@ class Video
     this.cover = cover || "";
     this.width = width || 0;
     this.height = height || 0;
-
-    this.x = x || 0;
-    this.y = y || 0;
-    this.renderWidth = renderWidth || 0;
-    this.renderHeight = renderHeight || 0;
   }
-
-  onSplit = () => {
-    console.log("onSplit");
-  };
-
-  onMerge = () => {
-    console.log("onMerge");
-  };
-
-  onRender = () => {
-    console.log("onRender");
-  };
-
-  onTranslate = (x: number, y: number, z: number) => {
-    console.log("onTranslate");
-  };
-
-  onRotate = (x: number, y: number, z: number) => {
-    console.log("onRotate");
-  };
-
-  onScale = (x: number, y: number, z: number) => {
-    console.log("onScale");
-  };
 }
 
 export { Video };

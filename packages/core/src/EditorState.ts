@@ -24,6 +24,9 @@ export interface State {
 
   /**@description 轨道列表 */
   tracks: Track[];
+
+  /**@description 帧率 */
+  fps: number;
 }
 
 export abstract class EditorState {
@@ -83,6 +86,16 @@ export abstract class EditorState {
   public setTracks(tracks: Track[]) {
     this.setState({
       tracks,
+    });
+  }
+
+  public getFps() {
+    return this.getState().fps;
+  }
+
+  public setFps(fps: number) {
+    this.setState({
+      fps,
     });
   }
 
